@@ -1,0 +1,44 @@
+---
+- hosts: tomcat
+  sudo: yes
+  tasks:
+   - name: install java
+     apt: name=default-jdk state=latest install_recommends=no
+
+   - name: install wget
+     apt: name=wget state=latest
+
+   - name: install tar
+     apt: name=tar state=latest
+
+   - name: install gzip
+     apt: name=gzip state=latest
+
+   - name: Download package
+     command: wget  http://apache.mirror.serversaustralia.com.au/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz
+
+   - name: Copy the package to /opt/tomcat
+     command: cp /home/ubuntu/apache-tomcat-9.0.10.tar.gz /opt/tomcat/
+ 
+   - name: extract the package and install
+     command: tar -xzvf /opt/tomcat/apache-tomcat-9.0.10.tar.gz -C /opt/tomcat/
+
+   - name: give permissions
+     command: chmod -R 777 /opt/tomcat/
+
+   - name: make sure tomcat service is running
+     shell: ./startup.sh
+     args: 
+      chdir: /opt/tomcat/apache-tomcat-9.0.10/bin
+
+  
+       
+
+     
+     
+
+
+
+
+
+
